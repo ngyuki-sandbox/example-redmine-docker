@@ -1,0 +1,43 @@
+version: '2'
+
+services:
+
+  data:
+    image: busybox
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ~/work/redmine/files:/usr/src/redmine/files:rw
+      - ~/work/redmine/plugins:/usr/src/redmine/plugins:ro
+      - ~/work/redmine/mysql:/var/lib/mysql:rw
+
+  mysql:
+    image: mysql
+    command: --character-set-server=utf8
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      MYSQL_DATABASE: redmine
+      MYSQL_USER: redmine
+      MYSQL_PASSWORD: password_of_redmine
+    networks:
+      default:
+        aliases:
+          - mysql
+    volumes_from:
+      - data
+    depends_on:
+      - data
+
+  redmine:
+    build: ./
+    ports:
+      - 3000:3000
+    environment:
+      REDMINE_DB_MYSQL: mysql
+      REDMINE_DB_DATABASE: redmine
+      REDMINE_DB_USERNAME: redmine
+      REDMINE_DB_PASSWORD: password_of_redmine
+    volumes_from:
+      - data
+    depends_on:
+      - data
+      - mysql

@@ -10,3 +10,7 @@ RUN set -x &&\
 RUN echo 'gem "puma"' > Gemfile.local
 
 RUN echo 'config.logger = Logger.new(STDOUT)' > config/additional_environment.rb
+
+COPY entrypoint.sh /
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["rails", "server", "-b", "0.0.0.0"]

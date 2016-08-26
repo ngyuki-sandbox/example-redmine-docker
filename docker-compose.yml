@@ -27,6 +27,11 @@ services:
       REDMINE_DB_DATABASE: redmine
       REDMINE_DB_USERNAME: redmine
       REDMINE_DB_PASSWORD: password_of_redmine
+      # plugins
+      REDMINE_PLUGIN_redmine_changeauthor:          https://github.com/ngyuki/redmine_changeauthor.git
+      REDMINE_PLUGIN_redmine_fetch_changesets_post: https://github.com/ngyuki/redmine_fetch_changesets_post.git
+      REDMINE_PLUGIN_redmine_redcarpet_viewer:      https://github.com/ngyuki/redmine_redcarpet_viewer.git
+      REDMINE_PLUGIN_redmine_rouge:                 https://github.com/ngyuki/redmine_rouge.git
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - files:/usr/src/redmine/files:rw
